@@ -1,0 +1,34 @@
+class Solution {
+public:
+    void backtrack(vector<vector<int>>& ans, vector<int>& store, vector<int>& nums, int target, int idx){
+        if(target == 0){
+            ans.push_back(store);
+            return;
+        }
+
+        for(int i=idx; i<nums.size(); i++){
+            if(i > idx && nums[i] == nums[i-1]){
+                continue;
+            }
+            if(target-nums[i] < 0){
+                break;
+            }
+
+            store.push_back(nums[i]);
+            backtrack(ans, store, nums, target-nums[i], i+1);
+            store.pop_back();
+        }
+    }
+    vector<vector<int>> combinationSum2(vector<int>& nums, int target) {
+
+        sort(nums.begin(), nums.end());
+
+        vector<vector<int>> ans;
+        vector<int> store;
+
+        backtrack(ans, store, nums, target, 0);
+
+        return ans;
+
+    }
+};
